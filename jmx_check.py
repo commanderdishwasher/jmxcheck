@@ -40,9 +40,10 @@ Throws exceptions:
 
 Author: Roy Antman
 Version: 0.1
-Compatible: Python 2.7+, Python 3.5+
+Compatible: Python 2.6+, Python 3.5+
 """
 from __future__ import print_function
+from __future__ import division
 import requests
 import json
 import argparse
@@ -151,7 +152,7 @@ class MBean(object):
         :return: list of MBeanResult objects [MBeanResult]
         """
 
-        url = "{}read/{}".format("http://" + self.jolokia_host + ":" + str(self.jolokia_port) + "/" + self.jolokia_context, self.mbean_name)
+        url = "{0}read/{1}".format("http://" + self.jolokia_host + ":" + str(self.jolokia_port) + "/" + self.jolokia_context, self.mbean_name)
 
         try:
             if self.jolokia_user and self.jolokia_pass:
@@ -234,7 +235,7 @@ class JMXCheck(object):
         mbean_percent_factors = None
         if second_mbean:
             second_mbean_value = second_mbean.get_jmx_result()[0].get_value_from_result(second_mbean.attribute, second_mbean.key)
-            mbean_percent_factors = "({}/{})".format(mbean_value, second_mbean_value)
+            mbean_percent_factors = "({0}/{1})".format(mbean_value, second_mbean_value)
             mbean_value = round((mbean_value / second_mbean_value) * 100)
 
         # Check for critical threshold first
@@ -248,7 +249,7 @@ class JMXCheck(object):
             return_code = 1
 
         if second_mbean:
-            mbean_value = "{}% {}".format(str(mbean_value), mbean_percent_factors)
+            mbean_value = "{0}% {1}".format(str(mbean_value), mbean_percent_factors)
 
         return return_code, str(mbean_value)
 
@@ -273,12 +274,12 @@ class JMXCheck(object):
                 explanation = ''
 
             if mbean.key:
-                print("{} - {} A:{} K:{} : {}".format(return_classification, mbean.mbean_name, mbean.attribute, mbean.key, str(return_value)))
+                print("{0} - {1} A:{2} K:{3} : {4}".format(return_classification, mbean.mbean_name, mbean.attribute, mbean.key, str(return_value)))
             else:
-                print("{} - {} A:{} : {}".format(return_classification, mbean.mbean_name, mbean.attribute, str(return_value)))
+                print("{0} - {1} A:{2} : {3}".format(return_classification, mbean.mbean_name, mbean.attribute, str(return_value)))
 
             if explanation:
-                print("{}\n".format(explanation))
+                print("{0}\n".format(explanation))
 
         return return_code
 
