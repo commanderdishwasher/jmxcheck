@@ -314,4 +314,4 @@ if __name__ == '__main__':
                                     args.warning,
                                     args.critical,
                                     compare=args.compare,
-                                    reverse=args.reverse, second_mbean=args.second_mbean))
+                                    reverse=args.reverse, second_mbean=second_mbean_obj))
